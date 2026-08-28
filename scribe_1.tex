@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+
+\title{scribe\_1}
+\author{Cameron Hockins}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\subsection{BFS vs. DFS Complexity}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Algorithm} & \textbf{Time} & \textbf{Space} \\
+\midrule
+BFS & $O(b^d)$ & $O(b^d)$ \\
+DFS & $O(b^M)$ & $O(bm)$ \\
+\bottomrule
+\end{tabular}
+\caption{Time and space complexity of BFS and DFS}
+\end{table}
+
+\textbf{Best of both worlds?}
+
+\section{Iterative-Deepening DFS (IDDFS)}
+
+\textbf{Idea:} DFS is light on memory, but can overshoot the goal --- limiting the depth and gradually increasing it fixes this.
+
+\begin{algorithm}[h]
+\caption{Iterative-Deepening Search}
+\begin{algorithmic}[1]
+\Function{Iterative-Deepening-Search}{problem}
+    \For{depth $= 0$ to $\infty$}
+        \State result $\leftarrow$ \Call{Depth-Limited-Search}{problem, depth}
+        \If{result $\neq$ cutoff}
+            \State \Return result
+        \EndIf
+    \EndFor
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textit{Note: make table.}
+
+\subsection{IDDFS Properties}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Property} & \textbf{Result} \\
+\midrule
+Complete & Yes, unless branching factor $b$ is infinite \\
+Optimal & Yes, if step costs are identical \\
+Time & $O(b^d)$ \\
+Space & $O(bd)$ \\
+\bottomrule
+\end{tabular}
+\caption{Properties of IDDFS}
+\end{table}
+
+\section{What if Steps Have Different Costs?}
+
+Let $E = \epsilon$.
+
+\subsection{Best-First Search / Uniform Cost Search}
+
+This considers the cost to explore a path, and chooses the lowest-cost path first.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Property} & \textbf{Result} \\
+\midrule
+Complete & Yes, if all step costs are above $\epsilon$ \\
+ & (costs keep decreasing for each step: $1, \tfrac{1}{2}, \tfrac{1}{4}, \dots$) \\
+Optimal & Yes \\
+Time & $O\!\left(b^{1 + \lfloor c/\epsilon \rfloor}\right)$ \\
+Space & $O\!\left(b^{1 + \lfloor c/\epsilon \rfloor}\right)$ \\
+\bottomrule
+\end{tabular}
+\caption{Properties of Uniform Cost Search}
+\end{table}
+
+\subsection{Example: Cabins on a Hill}
+
+Trying to find rocks on a hill:
+
+\begin{itemize}[noitemsep]
+    \item Up cost: 5
+    \item Side cost: 3
+    \item Down cost: 1
+\end{itemize}
+
+If we know the cabin is near the top, we can direct our search.
+
+\section{A* Search}
+
+A* searches ``towards'' a goal node.
+
+Uses a \textbf{heuristic}: an estimate of the remaining cost to the goal.
+
+\end{document}
