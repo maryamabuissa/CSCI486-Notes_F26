@@ -1,0 +1,86 @@
+# CSCI 486 — Probability and Counting
+**Class recap — October 15, 2026**
+
+## What We Covered
+We used dice to connect **sample spaces**, **probability distributions**, **conditional probability**, and **counting ordered sequences**.
+
+## 1. Sample Spaces: Two Six-Sided Dice
+Let $D_1,D_2\in\{1,2,3,4,5,6\}$ be independent fair dice, and let $Z=D_1+D_2$.
+
+There are $6\cdot6=36$ equally likely **ordered** outcomes $(D_1,D_2)$. However, their sums are **not** equally likely: $Z$ ranges from 2 to 12, and some sums can be formed in more ways than others.
+
+| Sum $z$ | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Number of outcomes | 1 | 2 | 3 | 4 | 5 | 6 | 5 | 4 | 3 | 2 | 1 |
+
+For example, six pairs sum to 7, so
+
+$$P(Z=7)=\frac{6}{36}=\frac16.$$
+
+For any event $A$ in an equally likely sample space:
+
+$$P(A)=\frac{\text{number of favorable outcomes}}{\text{number of possible outcomes}}.$$
+
+## 2. Conditional Probability
+Conditional probability asks: **How likely is an event, given that another event has occurred?**
+
+$$P(A\mid B)=\frac{P(A\cap B)}{P(B)},\qquad P(B)>0.$$
+
+The condition $B$ restricts the sample space to outcomes where $B$ holds. Count the outcomes that satisfy **both** $A$ and $B$, then divide by the outcomes satisfying $B$.
+
+## 3. Three Rolls of a Four-Sided Die
+Let $X_0,X_1,X_2$ be independent rolls, each in $\{1,2,3,4\}$.
+
+We want the probability of a **nondecreasing** sequence:
+
+$$P(X_0\le X_1\le X_2).$$
+
+There are $4^3=64$ equally likely ordered sequences in total. A sequence such as $(1,2,2)$ counts; $(2,1,3)$ does not. Repeated values are allowed.
+
+### Counting the successful sequences
+For a nondecreasing sequence of $k$ rolls from $n$ possible face values, the number of sequences is **combinations with repetition**:
+
+$$\binom{n+k-1}{k}.$$
+
+Here $n=4$ faces and $k=3$ rolls:
+
+$$\binom{4+3-1}{3}=\binom63=20.$$
+
+Therefore,
+
+$$\boxed{P(X_0\le X_1\le X_2)=\frac{20}{64}=\frac5{16}=0.3125.}$$
+
+### Why the table in class works
+Fix the final roll $X_2$. Count nondecreasing pairs $(X_0,X_1)$ with $X_1\le X_2$:
+
+| Final roll $X_2$ | Valid preceding pairs | Probability of this final value **and** nondecreasing order |
+|---|---:|---:|
+| 1 | 1 | $1/64$ |
+| 2 | 3 | $3/64$ |
+| 3 | 6 | $6/64$ |
+| 4 | 10 | $10/64$ |
+| **Total** | **20** | **$20/64$** |
+
+The counts $1,3,6,10$ are triangular numbers. Their sum is 20.
+
+The last column is a *joint probability*, $P(X_2=j\text{ and }X_0\le X_1\le X_2)$, not the conditional probability given $X_2=j$. Given $X_2=j$, the conditional probabilities are $1/16,3/16,6/16,10/16$ respectively.
+
+## 4. Main Takeaway
+
+```text
+Define the sample space
+        ↓
+Identify the event / ordering condition
+        ↓
+Count all equally likely outcomes
+        ↓
+Count favorable outcomes (tables or combinations)
+        ↓
+Probability = favorable / total
+```
+
+**Equations worth recognizing:**
+
+$$P(A)=\frac{|A|}{|\Omega|}\quad\text{(equally likely outcomes)}$$
+
+$$P(A\mid B)=\frac{P(A\cap B)}{P(B)}$$
